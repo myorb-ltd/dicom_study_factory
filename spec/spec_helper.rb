@@ -2,6 +2,9 @@
 
 require 'bundler/setup'
 require 'dicom_study_factory'
+require 'download_dicoms_helper'
+
+download_dicoms
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

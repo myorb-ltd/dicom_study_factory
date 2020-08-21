@@ -22,16 +22,8 @@ describe DicomStudyFactory::Transformer do
     end
     context 'with source files' do
       describe '.dcm files' do
-        let(:zip) { 'spec/support/FluoroWithDisplayShutter.dcm.zip' }
-        let(:zip_url) { 'http://www.dclunie.com/images/FluoroWithDisplayShutter.dcm.zip' }
         let(:support_dir) { 'spec/support/dicoms' }
-        let(:download_zip) do
-          system("curl #{zip_url} --output #{zip}")
-          FileUtils.mkdir_p support_dir
-          system("unzip #{zip} -d #{support_dir}")
-        end
         before do
-          download_zip unless File.exist?(zip)
           FileUtils.cp_r support_dir, described_class::SOURCE_DIR
         end
         it { expect(subject.files).not_to be_empty }
