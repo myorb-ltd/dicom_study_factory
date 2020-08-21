@@ -24,8 +24,8 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
-guard :rspec, cmd: "bundle exec rspec" do
-  require "guard/rspec/dsl"
+guard :rspec, cmd: 'bundle exec rspec' do
+  require 'guard/rspec/dsl'
   dsl = Guard::RSpec::Dsl.new(self)
 
   # RSpec files
@@ -37,4 +37,10 @@ guard :rspec, cmd: "bundle exec rspec" do
   # Ruby files
   ruby = dsl.ruby
   dsl.watch_spec_files_for(ruby.lib_files)
+  watch(%r{^lib/dicom_study_factory/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
+end
+
+guard :rubocop do
+  watch(%r{.+\.rb$})
+  watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
