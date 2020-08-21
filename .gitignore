@@ -6,9 +6,12 @@
 /pkg/
 /spec/reports/
 /tmp/
+/spec/support/FluoroWithDisplayShutter.dcm.zip
+/spec/support/dicoms/
 
 # rspec failure tracking
 .rspec_status
 
 # vim temporay files
 *.sw*
+
