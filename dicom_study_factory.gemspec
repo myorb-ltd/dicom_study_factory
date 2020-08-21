@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'dicom_study_factory/version'
 
 Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 2.6.1'
   spec.name          = 'dicom_study_factory'
   spec.version       = DicomStudyFactory::VERSION
   spec.authors       = ['Diego Lagos']
@@ -33,8 +36,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'byebug', '~> 11.1'
   spec.add_development_dependency 'guard-rspec', '~> 4.7'
+  spec.add_development_dependency 'guard-rubocop', '~> 1.3'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.89'
-  spec.add_development_dependency 'guard-rubocop', '~> 1.3'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe DicomStudyFactory do
   it 'has a version number' do
     expect(DicomStudyFactory::VERSION).not_to be nil
