@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'dicom_study_factory'
   spec.version       = DicomStudyFactory::VERSION
   spec.authors       = ['Diego Lagos']
-  spec.email         = ['diego@myorb.com']
+  spec.email         = ['diego.piccinini@gmail.com']
 
   spec.summary       = 'Create a dicom files samples filling tags with a factory library'
   spec.description   = 'We need dicom files populated with the right tags to test and use it for DEMOs.
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/diegopiccinini/dicom_study_factory/README.md'
   spec.license       = 'MIT'
 
-  spec.metadata['allowed_push_host'] = 'rubygems.org'
+  spec.metadata['allowed_push_host'] = 'https://rubygems.org'
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/diegopiccinini/dicom_study_factory'
