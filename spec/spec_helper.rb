@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'byebug'
 require 'dicom_study_factory'
 require 'download_dicoms_helper'
 
