@@ -6,19 +6,40 @@ module DicomStudyFactory
   # and apply a factory data to populate the dicom
   # with tags
   class Transformer
+    attr_accessor :source_dir, :output_dir
+
     SOURCE_DIR = 'tmp/source'
     OUTPUT_DIR = 'tmp/output'
-    def initialize
-      FileUtils.mkdir_p(SOURCE_DIR) unless Dir.exist? SOURCE_DIR
-      FileUtils.mkdir_p(OUTPUT_DIR) unless Dir.exist? OUTPUT_DIR
+
+    def initialize(source_dir: SOURCE_DIR, output_dir: OUTPUT_DIR)
+      @source_dir = source_dir
+      @output_dir = output_dir
+      FileUtils.mkdir_p(source_dir) unless Dir.exist? source_dir
+      FileUtils.mkdir_p(output_dir) unless Dir.exist? output_dir
     end
 
     def files
-      Dir.glob(File.join(SOURCE_DIR, '**/*.dcm'))
+      Dir.glob(File.join(source_dir, '**/*.dcm'))
     end
 
     def output_files
-      Dir.glob(File.join(OUTPUT_DIR, '**/*.dcm'))
+      Dir.glob(File.join(output_dir, '**/*.dcm'))
+    end
+
+    def by_patients_name
+      @by_patients_name ||= patients_name_files_array
+    end
+
+    private
+
+    def patients_name_files_array
+      by_patient = {}
+      files.each do |dcm|
+        image = Image.new(dcm)
+        by_patient[image.dcm.patients_name.value] ||= []
+        by_patient[image.dcm.patients_name.value] << dcm
+      end
+      by_patient
     end
   end
 end

@@ -1,0 +1,7 @@
+AllCops:
+  NewCops: enable
+
+Style/ClassVars:
+  Exclude:
+    - lib/dicom_study_factory/image.rb
+
