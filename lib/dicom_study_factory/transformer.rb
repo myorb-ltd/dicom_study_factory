@@ -55,6 +55,8 @@ module DicomStudyFactory
         image.dcm["0010,#{tag}"].value = value
         image.dcm.write(File.join(patient_dir, "#{index}.dcm"))
       end
+    rescue => e
+      puts e.message
     end
 
     def patients_name_files_array
