@@ -15,7 +15,8 @@ module DicomStudyFactory
       @source_dir = source_dir
       @output_dir = output_dir
       FileUtils.mkdir_p(source_dir) unless Dir.exist? source_dir
-      FileUtils.mkdir_p(output_dir) unless Dir.exist? output_dir
+      FileUtils.rm_rf(output_dir) if Dir.exist? output_dir
+      FileUtils.mkdir_p(output_dir)
     end
 
     def files
@@ -30,7 +31,31 @@ module DicomStudyFactory
       @by_patients_name ||= patients_name_files_array
     end
 
+    def fill_patient_tags
+      by_patients_name.each_value do |dcms|
+        patient, patient_dir = patient_prepare
+        dcms.each_with_index do |dcm, index|
+          image_populate_with_patient(patient, patient_dir, dcm, index)
+        end
+      end
+    end
+
     private
+
+    def patient_prepare
+      patient = Patient.new
+      patient_dir = File.join(output_dir, patient.name)
+      FileUtils.mkdir_p(patient_dir)
+      [patient, patient_dir]
+    end
+
+    def image_populate_with_patient(patient, patient_dir, dcm, index)
+      image = Image.new(dcm)
+      patient.tags.each_pair do |tag, value|
+        image.dcm["0010,#{tag}"].value = value
+        image.dcm.write(File.join(patient_dir, "#{index}.dcm"))
+      end
+    end
 
     def patients_name_files_array
       by_patient = {}

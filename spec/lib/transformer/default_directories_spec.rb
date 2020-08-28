@@ -4,7 +4,10 @@ describe DicomStudyFactory::Transformer do
   let(:source_dir) { 'tmp/source' }
   let(:output_dir) { 'tmp/output' }
   describe 'default directories' do
-    before { described_class.new }
+    before do
+      FileUtils.rm_rf('tmp')
+      described_class.new
+    end
     it { expect(described_class::SOURCE_DIR).to eq source_dir }
     it { expect(described_class::OUTPUT_DIR).to eq output_dir }
     it { expect(Dir.exist?(source_dir)).to eq true }
