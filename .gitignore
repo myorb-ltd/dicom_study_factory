@@ -14,4 +14,4 @@
 
 # vim temporay files
 *.sw*
-
+/.byebug_history

@@ -26,7 +26,7 @@ module DicomStudyFactory
       @dcm = DObject.read(file)
       @required_patient_tags = %w[0010 0020 0030 0040 1010]
       @required_study_tags = %w[0020 0030 0050 0060 1060 0080 0090 1030]
-      @required_study_id_tags = %w[0020,0010 0020,000d]
+      @required_study_id_tags = %w[0010 000d]
     end
 
     def tags
@@ -51,6 +51,14 @@ module DicomStudyFactory
 
     def study_id_tags_hash
       tag_hash(required_study_id_tags, '0020')
+    end
+
+    def add_element(tag, value)
+      if dcm[tag].nil?
+        dcm.add(Element.new(tag, value))
+      else
+        dcm[tag].value = value
+      end
     end
 
     private

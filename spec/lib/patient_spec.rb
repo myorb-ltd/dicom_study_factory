@@ -14,6 +14,5 @@ describe DicomStudyFactory::Patient do
   it { expect(tags['0040']).to match 'M|F' }
   it { expect(tags['1010']).to start_with '0' }
   it { expect(tags['1010']).to end_with 'Y' }
-  it { expect(tags['1010'].size).to eq 4 }
   it { expect(tags['1010'][1..2].to_i).to be <= years_from_dob }
 end

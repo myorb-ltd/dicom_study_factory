@@ -40,6 +40,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
   ruby = dsl.ruby
   dsl.watch_spec_files_for(ruby.lib_files)
   watch(%r{^lib/dicom_study_factory/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch('lib/dicom_study_factory/transformer.rb') { 'spec/lib/transformer' }
 end
 
 guard :rubocop do
