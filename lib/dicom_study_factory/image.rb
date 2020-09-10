@@ -26,7 +26,7 @@ module DicomStudyFactory
       @dcm = DObject.read(file)
       @required_patient_tags = %w[0010 0020 0030 0040 1010]
       @required_study_tags = %w[0020 0030 0050 0060 1060 0080 0090 1030]
-      @required_study_id_tags = %w[0010 000d]
+      @required_study_id_tags = %w[0010 000D]
     end
 
     def tags
@@ -61,11 +61,22 @@ module DicomStudyFactory
       end
     end
 
+    def all_required_tags
+      patient_tags_hash.merge(study_id_tags_hash, study_tags_hash)
+    end
+
+    def all_required_tags_names
+      all_required_tags.keys.map do |tag|
+        [tag, tags[tag][:name]]
+      end.to_h
+    end
+
     private
 
     def tag_hash(collection, id)
-      collection.map do |tag|
-        [tag, dcm.value("#{id},#{tag}")]
+      collection.map do |t|
+        tag = "#{id},#{t}"
+        [tag, dcm.value(tag)]
       end.to_h
     end
   end
