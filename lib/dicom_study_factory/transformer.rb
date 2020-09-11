@@ -6,7 +6,7 @@ module DicomStudyFactory
   # and apply a factory data to populate the dicom
   # with tags
   class Transformer
-    attr_accessor :source_dir, :output_dir, :patients_studies, :studies
+    attr_accessor :source_dir, :output_dir, :patients_studies, :studies, :image
 
     SOURCE_DIR = 'tmp/source'
     OUTPUT_DIR = 'tmp/output'
@@ -36,8 +36,8 @@ module DicomStudyFactory
         studies.each_pair do |study_uid, dcms|
           study_prepare(study_uid, patient_dir, patient.dob)
           dcms.each_with_index { |dcm, index| image_fill(patient, dcm, index) }
-          extra_data = { study_dir: @study_dir, dicoms: dcms.count }
-          @studies << patient.tags.merge(@study.tags, extra_data)
+          extra_data = { dicoms: dcms.count }
+          @studies << image.all_required_tags.merge(extra_data)
         end
       end
     end
@@ -46,6 +46,7 @@ module DicomStudyFactory
       headers = @studies.first.keys
       CSV.open(File.join(output_dir, 'studies.csv'), 'wb') do |csv|
         csv << headers
+        csv << headers[0..-2].map { |v| Image.tag_description(v) }
         @studies.each do |st|
           csv << st.values
         end
@@ -68,7 +69,7 @@ module DicomStudyFactory
     end
 
     def image_fill(patient, dcm, index)
-      image = Image.new(dcm)
+      @image = Image.new(dcm)
       patient.update_tags(image)
       @study.update_tags(image)
       output_image = File.join(@study_dir, "#{index}.dcm")

@@ -20,7 +20,7 @@ describe DicomStudyFactory::Transformer do
     it { expect(subject.studies.count).to eq 3 }
     it do
       subject.write_csv
-      expect(csv.count).to eq 4
+      expect(csv.count).to eq 5
     end
   end
 end

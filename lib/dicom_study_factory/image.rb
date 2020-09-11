@@ -17,6 +17,11 @@ module DicomStudyFactory
       def tags
         @@tags ||= csv.map { |row| [row['Tag'], { vr: row['VR'], name: row['Name'] }] }.to_h
       end
+
+      def tag_description(tag)
+        h = tags[tag]
+        "#{h[:name]} (#{h[:vr]})"
+      end
     end
 
     attr_accessor :required_patient_tags, :required_study_tags, :required_study_id_tags
