@@ -2,6 +2,8 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/dicom_study_factory`. To experiment with that code, run `bin/console` for an interactive prompt.
 
+## Ruby Version
+2.6.1
 
 ## Installation
 
@@ -21,7 +23,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Clone the repo and them `bin/console` to use the library.
+```ruby
+# you can point the source_dir: 'to/your/dicoms/dir/path', by default is tmp/source_dir and
+# output_dir: 'to the dir target' by default is tmp/ouptut
+t = DicomStudyFactory::Transformer.new
+t.fill_tags # will read and write new images in the output_dir with factored tags
+t.write_csv # will write a file with the new studies tags
+```
+The transformer class will read all the images at first to group by patient and study all the dcm images.
+Then the output dir will contain the new dicoms in a trree directorys group by PATIENT_NAME/STUDY_INSTANCE_UID ...
+The write_csv method is to create a `studies.csv`file of the studies tags.
 
 ## Development
 
