@@ -8,10 +8,12 @@ module DicomStudyFactory
     attr_reader :dob
 
     def initialize
-      @name = Faker::Name.unique.name
       @id = Faker::Number.unique.number(digits: 10).to_s
       @dob = Faker::Date.birthday(min_age: 0, max_age: 99)
       @sex = %w[M F].sample
+      last_name = Faker::Name.unique.last_name
+      first_name = @sex=='M' ? Faker::Name.male_first_name : Faker::Name.female_first_name
+      @name = first_name + ' ' + last_name
     end
 
     def tags
