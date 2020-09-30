@@ -9,6 +9,7 @@ describe DicomStudyFactory::Patient do
     expect(name).to include '^'
     expect(name.size).to be > 1
   end
+  it { expect(name).to include subject.name_tag }
   it { expect(Integer(tags['0020'])).to be_a Integer }
   it { expect(dob).to be_a Date }
   it { expect(tags['0040']).to match 'M|F' }
